@@ -1,10 +1,10 @@
 resource "aws_instance" "ec2_app1" {
   ami                     = var.AMD_ID
   instance_type           = var.INSTANCE_TYPE
-  subnet_id               = aws_subnet.private_sub1.id
-  vpc_security_group_ids  = [aws_security_group.private_SG.id]
-  iam_instance_profile    = aws_iam_instance_profile.test_instance_profile.name
-  key_name                = aws_key_pair.tf-key-pair.key_name
+  subnet_id               = module.my_network.priv_sub_1
+  vpc_security_group_ids  = [module.my_network.private_SG]
+  iam_instance_profile    = module.my_secuirty.instance_profile_name
+  key_name                = module.my_secuirty.key_name
   user_data = <<-EOF
               #!/bin/bash
               echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}-private-key --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
@@ -22,10 +22,10 @@ resource "aws_instance" "ec2_app1" {
 resource "aws_instance" "ec2_app2" {
   ami                     = var.AMD_ID
   instance_type           = var.INSTANCE_TYPE
-  subnet_id               = aws_subnet.private_sub2.id
-  vpc_security_group_ids  = [aws_security_group.private_SG.id]
-  iam_instance_profile    = aws_iam_instance_profile.test_instance_profile.name
-  key_name                = aws_key_pair.tf-key-pair.key_name
+  subnet_id               = module.my_network.priv_sub_2
+  vpc_security_group_ids  = [module.my_network.private_SG]
+  iam_instance_profile    = module.my_secuirty.instance_profile_name
+  key_name                = module.my_secuirty.key_name
   user_data = <<-EOF
               #!/bin/bash
               echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}-private-key --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
