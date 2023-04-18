@@ -1,6 +1,8 @@
 ## Terraform Bastion Host for AWS
 This repository contains the Terraform code to deploy infrastructure on AWS. It includes creating a VPC with two public and two private subnets, launching EC2 instances in the public and private subnets, and creating RDS and Elasticache instances.
 
+I created network, Security, RDS, Elastic Cache modules , this is a way to organize, encapsulate, and reuse Terraform configurations, making it easier to manage complex infrastructure deployments
+
 ## AWS Architecture
 ![terraform final task ITI](https://user-images.githubusercontent.com/47304558/232818541-96e104c3-3224-4319-9add-572d6beb42a9.png)
 
@@ -135,7 +137,7 @@ def lambda_handler(event, context):
 
 
 ### - when terraform destroy resources
-![image](https://user-images.githubusercontent.com/47304558/232342499-6fdacd86-7129-460e-b1ef-5a7048db59ef.png)
+![image](https://user-images.githubusercontent.com/47304558/232836396-36381930-e1f6-4daa-bf45-ed20aa4512ca.png)
 
 
 
@@ -145,8 +147,6 @@ With this Terraform code, you can create a VPC with public and private subnets i
 
 Overall, this project provides a comprehensive infrastructure setup that includes networking, compute, database, and caching resources. It also implements best practices for Terraform, such as using modules, workspaces, and variable definition files. With this setup, you can easily deploy and manage your infrastructure in multiple environments and regions, while maintaining a high level of security and scalability.
 
-## License
-This Terraform project is licensed under the MIT License. See the LICENSE file for more information.
 
 ## Author
-- Mahmoud M.Abdelwahab
+- <a href="https://github.com/mahmoudmohamed22"> Mahmoud M.Abdelwahab</a>
