@@ -3,7 +3,7 @@ algorithm = var.ALGORITHM_ENC
 rsa_bits  = var.RSA_BITS
 }
 
-resource "aws_key_pair" "tf-key-pair" {
+resource "aws_key_pair" "key_pair" {
 key_name = var.KEY_NAME
 public_key = tls_private_key.creatorkey.public_key_openssh
 }

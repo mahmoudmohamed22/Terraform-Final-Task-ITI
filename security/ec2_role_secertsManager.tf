@@ -23,7 +23,7 @@ EOF
 }
 resource "aws_iam_role_policy" "test_secretmanager_policy" {
   name = "test_secretmanager_policy"
-  role = "${aws_iam_role.ec2_secretmanager_role.id}"
+  role = aws_iam_role.ec2_secretmanager_role.id
 
   policy = <<EOF
 {
@@ -31,7 +31,7 @@ resource "aws_iam_role_policy" "test_secretmanager_policy" {
     "Statement": [{
         "Effect": "Allow",
         "Action": "secretsmanager:GetSecretValue",
-        "Resource": "${aws_secretsmanager_secret.secretsmanager.arn}"
+        "Resource": "${aws_secretsmanager_secret.secrets_manager.arn}"
     }]
 }
 EOF

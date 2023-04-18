@@ -3,9 +3,9 @@ output instance_profile_name {
 }
 
 output secret_smanager_name {
-    value=aws_secretsmanager_secret.secretsmanager.name
+    value=aws_secretsmanager_secret.secrets_manager.name
 }
 
 output key_name {
-    value=aws_key_pair.tf-key-pair.key_name
+    value=aws_key_pair.key_pair.key_name
 }
