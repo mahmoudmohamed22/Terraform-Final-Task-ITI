@@ -10,7 +10,7 @@ resource "aws_instance" "bastionhost1" {
               echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}_secrets --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
               chown ec2-user:ec2-user ${var.KEY_NAME}.pem
               chmod 400 /home/ec2-user/${var.KEY_NAME}.pem
-              sudo dnf install mariadb105
+              sudo dnf install mariadb105 -y
               EOF
   provisioner "local-exec" {
     command = "echo ${self.public_ip} >> inventory"
@@ -33,7 +33,7 @@ resource "aws_instance" "bastionhost2" {
               echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}_secrets --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
               chown ec2-user:ec2-user ${var.KEY_NAME}.pem
               chmod 400 /home/ec2-user/${var.KEY_NAME}.pem
-              sudo dnf install mariadb105
+              sudo dnf install mariadb105 -y
               EOF
   provisioner "local-exec" {
     command = "echo ${self.public_ip} >> inventory"
