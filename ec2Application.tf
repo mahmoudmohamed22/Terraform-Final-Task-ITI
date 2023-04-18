@@ -7,9 +7,10 @@ resource "aws_instance" "ec2_app1" {
   key_name                = module.my_secuirty.key_name
   user_data = <<-EOF
               #!/bin/bash
-              echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}-private-key --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
+              echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}_secrets --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
               chown ec2-user:ec2-user ${var.KEY_NAME}.pem
               chmod 400 /home/ec2-user/${var.KEY_NAME}.pem
+              sudo dnf install mariadb105
               EOF
 
   
@@ -28,9 +29,10 @@ resource "aws_instance" "ec2_app2" {
   key_name                = module.my_secuirty.key_name
   user_data = <<-EOF
               #!/bin/bash
-              echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}-private-key --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
+              echo $(aws secretsmanager get-secret-value --secret-id ${var.COMPANY_NAME}_secrets --query SecretString --output text) > /home/ec2-user/${var.KEY_NAME}.pem
               chown ec2-user:ec2-user ${var.KEY_NAME}.pem
               chmod 400 /home/ec2-user/${var.KEY_NAME}.pem
+              sudo dnf install mariadb105
               EOF
   tags = {
     Name = "${var.COMPANY_NAME}_pv-ec2-2"
