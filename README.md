@@ -17,20 +17,26 @@ This project uses Terraform to create the following AWS resources:
 
 The project also includes two workspaces for deploying the infrastructure in different regions, and a script for auto-installing MySQL and Redis on the EC2 instances and scripts to auto connect to them.
 
-## Getting started
-To use this Terraform project, you will need:
+## Prerequisites
+Before running the deployment script, you will need to have the following:
 
-- An AWS account with appropriate permissions to create EC2 instances and security groups.
-
-- Terraform installed on your local machine.
-
-- An SSH key pair to use for accessing the Bastion host.
+- AWS account
+- Terraform installed on your local machine
+- AWS CLI installed on your local machine
+- AWS credentials configured on your local machine
+- A Secret Manager in AWS with the RDS database credentials stored (username, password)
+- A S3 bucket to store the Terraform state file, and DynamoDB to use for state locking. You can include them in backend.tf
 
 ## To get started:
 
 Clone this repository to your local machine.
 ```
-git clone https://github.com/mahmoudmohamed22/Bastion-host-Terraform
+git clone https://github.com/mahmoudmohamed22/Terraform-final-task
+```
+Create the 2 workspaces
+```
+$ terraform workspace new dev
+$ terraform workspace new prod
 ```
 Run `terraform init` to download the necessary Terraform plugins.
 
@@ -114,7 +120,7 @@ def lambda_handler(event, context):
 ```
 ### when changed in AWS infrastructure
 ![image](https://user-images.githubusercontent.com/47304558/232820612-caee9ad3-abbe-4d7a-9276-3e733025266a.png)
-## test 
+## Test 
 ### - when resources created using terraform
 
 ![Screenshot from 2023-04-18 16-18-24](https://user-images.githubusercontent.com/47304558/232814947-5af73013-1589-4dca-bbd8-1b00f8ae1e68.png)
@@ -124,28 +130,23 @@ def lambda_handler(event, context):
 
 ![image](https://user-images.githubusercontent.com/47304558/232341832-d396336e-2fae-40c6-a8a6-6629d1813621.png)
 
+### - when connected RDS mysql from public ec2 instance 
+![image](https://user-images.githubusercontent.com/47304558/232832593-aa2d71eb-6d6e-476b-9525-decd9f0df96f.png)
+
+
 ### - when terraform destroy resources
 ![image](https://user-images.githubusercontent.com/47304558/232342499-6fdacd86-7129-460e-b1ef-5a7048db59ef.png)
 
 
 
 
-## Security considerations
-The Bastion host is a critical component of the security infrastructure, and should be configured and maintained carefully. Here are some guidelines to follow:
+## Conclusion
+With this Terraform code, you can create a VPC with public and private subnets in two different availability zones, launch EC2 instances with RDS and Elasticache instances, and set up a bastion host for accessing the private instances. By using modules and workspaces, you can easily manage the infrastructure for multiple environments.
 
-- Only authorized users should be allowed to log in to the Bastion host.
-
-- Strong passwords should be used for all accounts on the Bastion host.
-
-- Two-factor authentication (2FA) should be used for all accounts on the Bastion host, if possible.
-
-- Access to the private network should be restricted to only those users who need it.
-
-- All SSH connections to the Bastion host and private servers should be encrypted using SSH keys or other secure authentication mechanisms.
-
-- Logs should be monitored regularly for signs of unauthorized access or other security breaches.
-
-- The Bastion host and private servers should be kept up-to-date with the latest security patches and software updates.
+Overall, this project provides a comprehensive infrastructure setup that includes networking, compute, database, and caching resources. It also implements best practices for Terraform, such as using modules, workspaces, and variable definition files. With this setup, you can easily deploy and manage your infrastructure in multiple environments and regions, while maintaining a high level of security and scalability.
 
 ## License
 This Terraform project is licensed under the MIT License. See the LICENSE file for more information.
+
+## Author
+- Mahmoud M.Abdelwahab
