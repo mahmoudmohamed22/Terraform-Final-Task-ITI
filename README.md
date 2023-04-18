@@ -1,10 +1,21 @@
 ## Terraform Bastion Host for AWS
-This Terraform project creates a Bastion host in AWS to provide secure access to servers within a private network. It creates an EC2 instance in a public subnet and configures it as a Bastion host. It also creates a security group to allow SSH access to the Bastion host from the public internet.
+This repository contains the Terraform code to deploy infrastructure on AWS. It includes creating a VPC with two public and two private subnets, launching EC2 instances in the public and private subnets, and creating RDS and Elasticache instances.
 
-## aws architecture
-![bastion host drawio](https://user-images.githubusercontent.com/47304558/232342752-080c4337-1f59-44ab-b07d-18088818b9b1.png)
+## AWS Architecture
+![terraform final task ITI](https://user-images.githubusercontent.com/47304558/232818541-96e104c3-3224-4319-9add-572d6beb42a9.png)
 
+## Overview
+This project uses Terraform to create the following AWS resources:
+- VPC
+- Internet Gateway
+- Public Route Table
+- Private Route Table
+- Public EC2 instances
+- Private EC2 instances
+- RDS instance
+- Elasticache instance
 
+The project also includes two workspaces for deploying the infrastructure in different regions, and a script for auto-installing MySQL and Redis on the EC2 instances and scripts to auto connect to them.
 
 ## Getting started
 To use this Terraform project, you will need:
@@ -34,10 +45,79 @@ ssh -i /path/to/private/key ec2-user@<bastion-public-ip>
 
 Replace /path/to/private/key with the path to your private SSH key, and <bastion-public-ip> with the public IP address of the Bastion host.
 
+## To detect changes in aws infrastructure 
+save tfstate for backend terraform in s3 buckect then create event event notification to connect to trigger for lambda function and write lambda function code to send email used SES in AWS and assign permissions to lambda function
+
+![detect](https://user-images.githubusercontent.com/47304558/232821693-d26b5e35-1ed0-40a3-9e16-16f5b8169d30.png)
+
+```
+import boto3
+from botocore.exceptions import ClientError
+
+def send_email():
+    SENDER = "mahmoudabdelwahab5555@gmail.com" # must be verified in AWS SES Email
+    RECIPIENT = "mahmoudabdelwahab5555@gmail.com" # must be verified in AWS SES Email
+
+    # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
+    AWS_REGION = "eu-central-1"
+
+    # The subject line for the email.
+    SUBJECT = "This is test email for testing"
+
+    # The email body for recipients with non-HTML email clients.
+    BODY_TEXT = ("Hey Hi mahmoud m.abdelwahab...\r\n"
+                "tfstate file has been changed\r\n"
+                "infrastructure changed\r\n"
+                )
+    
+
+    # The character encoding for the email.
+    CHARSET = "UTF-8"
+
+    # Create a new SES resource and specify a region.
+    client = boto3.client('ses',region_name=AWS_REGION)
+
+    # Try to send the email.
+    try:
+        #Provide the contents of the email.
+        response = client.send_email(
+            Destination={
+                'ToAddresses': [
+                    RECIPIENT,
+                ],
+            },
+            Message={
+                'Body': {
+                    'Text': {
+        
+                        'Data': BODY_TEXT
+                    },
+                },
+                'Subject': {
+
+                    'Data': SUBJECT
+                },
+            },
+            Source=SENDER
+        )
+    # Display an error if something goes wrong.  
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print("Email sent! Message ID:"),
+        print(response['MessageId'])
+
+def lambda_handler(event, context):
+    # TODO implement
+    send_email()
+
+```
+### when changed in AWS infrastructure
+![image](https://user-images.githubusercontent.com/47304558/232820612-caee9ad3-abbe-4d7a-9276-3e733025266a.png)
 ## test 
 ### - when resources created using terraform
-![image](https://user-images.githubusercontent.com/47304558/232342111-a3cc734a-4bdc-4801-8603-89593030fbff.png)
-![image](https://user-images.githubusercontent.com/47304558/232342202-96696bf7-8989-459b-999e-70a41187fd96.png)
+
+![Screenshot from 2023-04-18 16-18-24](https://user-images.githubusercontent.com/47304558/232814947-5af73013-1589-4dca-bbd8-1b00f8ae1e68.png)
 
 
 ### - when connected ssh from public ec2 instance to private ec2 instance 
