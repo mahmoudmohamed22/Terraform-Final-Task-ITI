@@ -33,7 +33,7 @@ Before running the deployment script, you will need to have the following:
 
 Clone this repository to your local machine.
 ```
-git clone https://github.com/mahmoudmohamed22/Terraform-final-task
+git clone https://github.com/mahmoudmohamed22/Terraform-Final-Task-ITI
 ```
 Create the 2 workspaces
 ```
