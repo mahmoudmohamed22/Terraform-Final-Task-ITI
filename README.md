@@ -1,4 +1,4 @@
-## Terraform Bastion Host for AWS
+## Terraform Final Task ITI
 This repository contains the Terraform code to deploy infrastructure on AWS. It includes creating a VPC with two public and two private subnets, launching EC2 instances in the public and private subnets, and creating RDS and Elasticache instances.
 
 It includes creating network, Security, RDS, Elastic Cache modules , this is a way to organize, encapsulate, and reuse Terraform configurations, making it easier to manage complex infrastructure deployments
