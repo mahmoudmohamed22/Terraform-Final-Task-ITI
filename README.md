@@ -4,7 +4,7 @@ This repository contains the Terraform code to deploy infrastructure on AWS. It 
 It includes creating network, Security, RDS, Elastic Cache modules , this is a way to organize, encapsulate, and reuse Terraform configurations, making it easier to manage complex infrastructure deployments
 
 ## AWS Architecture
-![terraform final task ITI](https://user-images.githubusercontent.com/47304558/232818541-96e104c3-3224-4319-9add-572d6beb42a9.png)
+![terraform final task ITI drawio](https://user-images.githubusercontent.com/47304558/233790912-c80943d8-6774-47d7-9f85-e578341f3cba.png)
 
 ## Overview
 This project uses Terraform to create the following AWS resources:
